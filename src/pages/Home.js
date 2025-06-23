@@ -48,6 +48,13 @@ function Home() {
                       {asset.status}
                     </span>
                   </p>
+                  <div className="d-flex justify-content-between align-items-center mb-4">
+                      
+                          <button className="btn btn-success" onClick={() => navigate('/add')}>
+                              + Add Asset
+                              </button>
+                          </div>
+
                   <div className="d-flex justify-content-between">
                     <button
                       className="btn btn-warning btn-sm"

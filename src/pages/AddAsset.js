@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { addAsset } from '../services/assetService';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { addAsset } from '../services/assetService';
 
 function AddAsset() {
-  const [asset, setAsset] = useState({ name: '', status: '' });
   const navigate = useNavigate();
+  const [asset, setAsset] = useState({ name: '', status: '' });
 
   const handleChange = (e) => {
     setAsset({ ...asset, [e.target.name]: e.target.value });
@@ -18,11 +18,40 @@ function AddAsset() {
 
   return (
     <div className="container">
-      <h2>Add Asset</h2>
+      <h2 className="mb-4">Add New Asset</h2>
       <form onSubmit={handleSubmit}>
-        <input name="name" placeholder="Name" onChange={handleChange} className="form-control mb-2" />
-        <input name="status" placeholder="Status" onChange={handleChange} className="form-control mb-2" />
-        <button type="submit" className="btn btn-success">Add</button>
+        <div className="mb-3">
+          <label htmlFor="name" className="form-label">Asset Name</label>
+          <input
+            type="text"
+            className="form-control"
+            id="name"
+            name="name"
+            value={asset.name}
+            onChange={handleChange}
+            placeholder="Enter asset name"
+            required
+          />
+        </div>
+
+        <div className="mb-3">
+          <label htmlFor="status" className="form-label">Status</label>
+          <select
+            className="form-select"
+            id="status"
+            name="status"
+            value={asset.status}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select status</option>
+            <option value="Available">Available</option>
+            <option value="In Use">In Use</option>
+            <option value="Under Repair">Under Repair</option>
+          </select>
+        </div>
+
+        <button type="submit" className="btn btn-success">Add Asset</button>
       </form>
     </div>
   );
