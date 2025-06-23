@@ -7,10 +7,8 @@ function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("✅ Home.js mounted");
     getAssets()
       .then((res) => {
-        console.log("Assets fetched:", res.data);
         setAssets(res.data);
       })
       .catch((err) => {
@@ -18,23 +16,57 @@ function Home() {
       });
   }, []);
 
+  const handleDelete = async (id) => {
+    await deleteAsset(id);
+    setAssets(assets.filter((a) => a.id !== id));
+  };
+
   return (
     <div>
-      <h2>Asset List</h2>
+      <h2 className="mb-4">Asset Inventory</h2>
+
       {assets.length === 0 ? (
         <p>No assets found.</p>
       ) : (
-        <ul className="list-group">
+        <div className="row">
           {assets.map((asset) => (
-            <li key={asset.id} className="list-group-item d-flex justify-content-between">
-              <span>{asset.name} - {asset.status}</span>
-              <div>
-                <button className="btn btn-sm btn-warning me-2" onClick={() => navigate(`/edit/${asset.id}`)}>Edit</button>
-                <button className="btn btn-sm btn-danger" onClick={() => deleteAsset(asset.id)}>Delete</button>
+            <div className="col-md-4 mb-4" key={asset.id}>
+              <div className="card h-100 shadow-sm">
+                <div className="card-body">
+                  <h5 className="card-title">{asset.name}</h5>
+                  <p className="card-text">
+                    <strong>Status:</strong>{" "}
+                    <span
+                      className={`badge ${
+                        asset.status === "Available"
+                          ? "bg-success"
+                          : asset.status === "In Use"
+                          ? "bg-primary"
+                          : "bg-warning text-dark"
+                      }`}
+                    >
+                      {asset.status}
+                    </span>
+                  </p>
+                  <div className="d-flex justify-content-between">
+                    <button
+                      className="btn btn-warning btn-sm"
+                      onClick={() => navigate(`/edit/${asset.id}`)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="btn btn-danger btn-sm"
+                      onClick={() => handleDelete(asset.id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
               </div>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
