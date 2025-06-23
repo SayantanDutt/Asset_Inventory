@@ -1,34 +1,43 @@
-import { useEffect, useState } from 'react';
-import { getAssets, deleteAsset } from '../services/assetService';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { getAssets, deleteAsset } from '../services/assetService';
 
 function Home() {
   const [assets, setAssets] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    getAssets().then((res) => setAssets(res.data));
+    console.log("✅ Home.js mounted");
+    getAssets()
+      .then((res) => {
+        console.log("Assets fetched:", res.data);
+        setAssets(res.data);
+      })
+      .catch((err) => {
+        console.error("Error fetching assets:", err);
+      });
   }, []);
-
-  const handleDelete = async (id) => {
-    await deleteAsset(id);
-    setAssets(assets.filter((a) => a.id !== id));
-  };
 
   return (
     <div>
-      <h2>Asset Inventory</h2>
-      <button onClick={() => navigate('/add')}>Add Asset</button>
-      <ul>
-        {assets.map((a) => (
-          <li key={a.id}>
-            {a.name} - {a.status}
-            <button onClick={() => navigate(`/edit/${a.id}`)}>Edit</button>
-            <button onClick={() => handleDelete(a.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      <h2>Asset List</h2>
+      {assets.length === 0 ? (
+        <p>No assets found.</p>
+      ) : (
+        <ul className="list-group">
+          {assets.map((asset) => (
+            <li key={asset.id} className="list-group-item d-flex justify-content-between">
+              <span>{asset.name} - {asset.status}</span>
+              <div>
+                <button className="btn btn-sm btn-warning me-2" onClick={() => navigate(`/edit/${asset.id}`)}>Edit</button>
+                <button className="btn btn-sm btn-danger" onClick={() => deleteAsset(asset.id)}>Delete</button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
+
 export default Home;
