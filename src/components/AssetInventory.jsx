@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import AssetForm from './AssetForm';
 import './AssetInventory.css';
+
+const LOCAL_STORAGE_KEY = 'assetInventoryData';
 
 const AssetInventory = () => {
   const [assets, setAssets] = useState([]);
@@ -8,6 +10,19 @@ const AssetInventory = () => {
   const [editAsset, setEditAsset] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
+
+  // ⬇ Load from localStorage when app starts
+  useEffect(() => {
+    const saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (saved) {
+      setAssets(JSON.parse(saved));
+    }
+  }, []);
+
+  // ⬆ Save to localStorage whenever assets change
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(assets));
+  }, [assets]);
 
   const handleAdd = () => {
     setEditAsset(null);
@@ -22,7 +37,7 @@ const AssetInventory = () => {
   const handleDelete = (assetId) => {
     const confirmed = window.confirm('Are you sure you want to delete this asset?');
     if (confirmed) {
-      const updatedAssets = assets.filter(asset => asset.assetId !== assetId);
+      const updatedAssets = assets.filter((asset) => asset.assetId !== assetId);
       setAssets(updatedAssets);
     }
   };
@@ -65,7 +80,6 @@ const AssetInventory = () => {
     <div className="container">
       <h2>Asset Inventory</h2>
 
-      {/* Summary Cards */}
       <div className="summary-cards">
         <div className="card blue">Total: {totalAssets}</div>
         <div className="card green">Active: {activeCount}</div>
@@ -73,7 +87,6 @@ const AssetInventory = () => {
         <div className="card red">Under Repair: {repairCount}</div>
       </div>
 
-      {/* Filters */}
       <div className="filters" style={{ display: 'flex', gap: '16px', marginBottom: '20px' }}>
         <input
           type="text"
