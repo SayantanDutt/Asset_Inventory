@@ -1,0 +1,30 @@
+.summary-cards {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  flex: 1;
+  min-width: 160px;
+  padding: 16px;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+}
+
+.card.blue {
+  background-color: #007bff;
+}
+.card.green {
+  background-color: #28a745;
+}
+.card.orange {
+  background-color: #fd7e14;
+}
+.card.red {
+  background-color: #dc3545;
+}
