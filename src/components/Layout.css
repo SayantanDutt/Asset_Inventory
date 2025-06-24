@@ -1,0 +1,45 @@
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  text-align: right;
+  margin-bottom: 20px;
+}
+
+.theme-toggle button {
+  padding: 8px 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Light theme */
+.layout.light .main-content {
+  background-color: #f4f6f8;
+  color: #111;
+}
+.layout.light .theme-toggle button {
+  background-color: #007bff;
+}
+
+/* Dark theme */
+.layout.dark .main-content {
+  background-color: #1e1e2f;
+  color: #eee;
+}
+.layout.dark .theme-toggle button {
+  background-color: #444;
+  color: #eee;
+}

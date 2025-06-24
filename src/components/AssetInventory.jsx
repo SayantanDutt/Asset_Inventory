@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import AssetForm from './AssetForm';
+import AssetForm from '../components/AssetForm';
 import './AssetInventory.css';
 
 const LOCAL_STORAGE_KEY = 'assetInventoryData';

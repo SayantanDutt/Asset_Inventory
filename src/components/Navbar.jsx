@@ -1,16 +1,16 @@
+// src/components/Navbar.jsx
 import React from 'react';
+import './Navbar.css';
 
-const Navbar = () => {
+const Navbar = ({ toggleTheme, darkMode }) => {
   return (
-    <nav style={{
-      backgroundColor: '#333',
-      color: '#fff',
-      padding: '10px',
-      marginBottom: '20px'
-    }}>
-      <h2 style={{ margin: 0 }}>My Inventory App</h2>
+    <nav className="navbar">
+      <h1 className="navbar-title">Asset Inventory</h1>
+      <button className="theme-toggle-btn" onClick={toggleTheme}>
+        {darkMode ? '☀ Light Mode' : '🌙 Dark Mode'}
+      </button>
     </nav>
   );
 };
 
-export default Navbar;  // ✅ This line is critical!
+export default Navbar;
